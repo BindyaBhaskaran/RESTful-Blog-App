@@ -4,14 +4,15 @@ var express = require('express'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     app = express();
-
+    const PORT = process.env.PORT
+    
 mongoose.connect("mongodb://localhost/rest_blog");
 app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSanitizer());
 app.use(methodOverride("_method"));
-const PORT = process.env.PORT
+
 
 var blogSchema = new mongoose.Schema({
     title: String,
