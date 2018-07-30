@@ -1,12 +1,14 @@
+require('dotenv').config();
+
 var express = require('express'),
     methodOverride = require('method-override'),
     expressSanitizer = require('express-sanitizer'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     app = express();
-const PORT = process.env.PORT ; 
+const PORT = process.env.PORT ;
 
-mongoose.connect("mongodb://localhost/rest_blog");
+mongoose.connect(process.env.MONGO_URI || "mongodb://localhost/rest_blog");
 app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,7 +36,7 @@ app.get("/", function(req, res){
 //});
 
 app.get('/blogs', function(req, res){
-    Blog.find({}, function(err, blogs){ 
+    Blog.find({}, function(err, blogs){
         if(err){
             console.log(err);
         }
@@ -107,5 +109,5 @@ app.delete('/blogs/:id', function(req, res){
 
 
 app.listen(PORT || 3002 , function(){
-   console.log("Server listening on port 3002"); 
+   console.log("Server listening on port 3002");
 });
